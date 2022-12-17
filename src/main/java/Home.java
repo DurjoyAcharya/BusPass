@@ -19,22 +19,37 @@ public class Home extends JFrame {
         t1.setBounds(300,100, 350,30);
         Font  f3  = new Font(Font.DIALOG,  Font.BOLD, 24);
         t1.setFont(f3);
-        var btn=new Button("Next");
+        var btn=new JButton("Next");
         btn.setBounds(470,620,200,100);
         btn.setBackground(Color.GREEN);
-        var btn1=new Button("Exit");
+        var btn1=new JButton("Exit");
         btn1.setBounds(200,620,200,100);
         btn1.setBackground(Color.RED);
+
+
+        btn.setFont(new Font("Calibri", Font.BOLD, 24));
+        btn.setBackground(Color.GREEN);
+        btn.setForeground(Color.white);
+        btn.setUI(new StyledButtonUI());
+
+        btn1.setFont(new Font("Calibri", Font.BOLD, 24));
+        btn1.setBackground(Color.RED);
+        btn1.setForeground(Color.white);
+        btn1.setUI(new StyledButtonUI());
+
+
         label.add(btn);
         label.add(btn1);
         label.add(t1);
         getContentPane().add(label);
         btn1.addActionListener((e)->{
-            System.out.println("NEXT");
+            System.exit(0);
         });
         btn.addActionListener((event)->{
-            System.out.println("Close");
+            new NextPage();
+            setVisible(false);
         });
+        setIconImage(new ImageIcon("/home/rupkotha/IdeaProjects/BusPass/src/icon.png").getImage());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
