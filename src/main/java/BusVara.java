@@ -2,24 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class BusVara extends JFrame {
     private static final long serialVersionUID = 1L;
+    public static ArrayList<String> list,list_1;
 
-    /**
-     * login window width
-     */
     public static final int W_FRAME = 540;
-
-    /**
-     * login window height
-     */
     public static final int H_FRAME = 360;
-
-    /**
-     * wrong password or username error message
-     */
-
     private JPanel contentPane;
     private JButton button_login;
     private JLabel label_username, label_password;
@@ -123,11 +119,45 @@ public class BusVara extends JFrame {
         contentPane.add(time);
 
         setContentPane(contentPane);
-
     }
+    private static void fetchDataFromStart() throws IOException {
+        Path path;
+        list=new ArrayList<>();
+        path= Path.of("/home/rupkotha/IdeaProjects/BusPass/src/main/resources/StartPoint.txt");
+        var s=  Files.readAllLines(path);
+        list= (ArrayList<String>) s;
+    }
+    private static void fetchDataFromDestination() throws IOException {
+        Path path;
+        list_1=new ArrayList<>();
+        path= Path.of("/home/rupkotha/IdeaProjects/BusPass/src/main/resources/DestPoint.txt");
+        var s=  Files.readAllLines(path);
+        list_1= (ArrayList<String>) s;
+    }
+    public static void main(String[] args) throws IOException {
+        fetchDataFromStart();
+        var find=list
+                          .stream()
+                          .filter(x->x.equals("Savar"))
+                          .findFirst();
+        System.out.println(find.orElse("null"));
+        fetchDataFromDestination();
+        var dest=list_1
+                .stream()
+                .filter(x->x.equals("Mirpur 1"))
+                .findFirst()
+                .orElse("null");
+        System.out.println(dest);
 
 
-    public static void main(String[] args) {
-        new BusVara();
+
     }
 }
+//        List<String> collect = list.stream()
+//                .collect(Collectors
+//                .groupingBy(Function.identity(),Collectors.counting()))
+//                .entrySet()
+//                .stream()
+//                .filter(p->p.getValue()>1)
+//                .map(Map.Entry::getKey)
+//                .collect(Collectors.toList());
