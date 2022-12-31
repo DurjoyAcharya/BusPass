@@ -14,8 +14,14 @@
                 <configuration>
                     <source>19</source>
                     <target>19</target>
+
                 </configuration>
+            <dependencies>
+
+            </dependencies>
             </plugin>
+
         </plugins>
+
     </build>
 </project>

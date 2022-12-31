@@ -42,14 +42,14 @@ public class VirtualConsoleController extends JPanel {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(()->{
-            try {
-                createAndShowGui();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
+   public void VirtualConsoleTester() {
+       SwingUtilities.invokeLater(() -> {
+           try {
+               createAndShowGui();
+           } catch (IOException e) {
+               throw new RuntimeException(e);
+           }
+       });
+   }
 
 }

@@ -19,11 +19,16 @@ public class BusVara extends JFrame {
     private JPanel contentPane;
     private JButton button_login;
     private JLabel label_username, label_password;
-    private JTextField textField_username;
-    private JTextField destText;
+    public static JTextField textField_username;
+    public static JTextField destText;
     private Insets insets;
 
+    private JLabel distance;
+    public static JTextField textDist;
+    public static ArrayList<String> buslist;
+
     private JLabel busName,vara,time;
+    private JLabel destName;
     public BusVara() throws HeadlessException {
         setTitle("Bus-Vara");
         setSize(700,500);
@@ -58,6 +63,7 @@ public class BusVara extends JFrame {
                 label_username.getWidth(), label_username.getHeight());
         contentPane.add(label_password);
 
+
         textField_username = new JTextField();
         textField_username.setBounds(label_username.getX() + label_username.getWidth() + 30,
                 label_username.getY(), 250, label_username.getHeight());
@@ -80,44 +86,67 @@ public class BusVara extends JFrame {
         });
         contentPane.add(destText);
 
-        button_login = new JButton("Search");
-        button_login.setBounds(textField_username.getX(), label_username.getY() + 80, 100, 22);
+
+        distance = new JLabel("Total Distance: ");
+        distance.setFont(label_username.getFont());
+        distance.setBounds(label_username.getX(), label_username.getY() + 80,
+                label_username.getWidth(), label_username.getHeight());
+        contentPane.add(distance);
+
+        textDist=new JTextField();
+        textDist.setFont(distance.getFont());
+        textDist.setBounds(destText.getX(),distance.getY(),destText.getWidth(),destText.getHeight());
+        contentPane.add(textDist);
+        textDist.addActionListener((e)->{
+            System.out.println();
+        });
+
+
+
+        button_login = new JButton("Calculate");
+        button_login.setBounds(textField_username.getX(), label_username.getY() + 120, 120, 30);
         button_login.setFocusPainted(false);
-        button_login.setBackground(Color.ORANGE);
+        button_login.setBackground(Color.GREEN);
         button_login.setFont(new Font(Font.MONOSPACED,Font.BOLD,16));
-        button_login.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-
-            }
+        button_login.setUI(new StyledButtonUI());
+        button_login.addActionListener(e->{
+            new Result();
         });
         contentPane.add(button_login);
 
         contentPane.setBackground(Color.pink);
 
-        busName=new JLabel("Bus Name: Rajdhani");
-        busName.setSize(300,30);
-        busName.setLocation(label_username.getX(),250);
-        busName.setFont(new Font(Font.MONOSPACED,Font.BOLD,18));
-        busName.setForeground(Color.BLUE);
-        contentPane.add(busName);
+//        busName=new JLabel("From: null");
+//        busName.setSize(300,30);
+//        busName.setLocation(label_username.getX(),250);
+//        busName.setFont(new Font(Font.MONOSPACED,Font.BOLD,18));
+//        busName.setForeground(Color.BLUE);
+//        contentPane.add(busName);
+//
+//        destName=new JLabel("To: null");
+//        destName.setSize(300,30);
+//        destName.setLocation(label_username.getX(),290);
+//        destName.setFont(new Font(Font.MONOSPACED,Font.BOLD,18));
+//        destName.setForeground(Color.BLUE);
+//        contentPane.add(destName);
+//
+//        vara=new JLabel("Vara: 00TK");
+//        vara.setSize(300,30);
+//        vara.setLocation(label_username.getX(),330);
+//        vara.setFont(new Font(Font.MONOSPACED,Font.BOLD,18));
+//        vara.setForeground(Color.BLUE);
+//        contentPane.add(vara);
+//
+//
+//        time=new JLabel("Time: 6AM-8PM");
+//        time.setSize(300,30);
+//        time.setLocation(label_username.getX(),370);
+//        time.setFont(new Font(Font.MONOSPACED,Font.BOLD,18));
+//        time.setForeground(Color.BLUE);
+//        contentPane.add(time);
 
-        vara=new JLabel("Vara: 50TK");
-        vara.setSize(300,30);
-        vara.setLocation(label_username.getX(),300);
-        vara.setFont(new Font(Font.MONOSPACED,Font.BOLD,18));
-        vara.setForeground(Color.BLUE);
-        contentPane.add(vara);
 
-
-        time=new JLabel("Time: 6AM-8PM");
-        time.setSize(300,30);
-        time.setLocation(label_username.getX(),350);
-        time.setFont(new Font(Font.MONOSPACED,Font.BOLD,18));
-        time.setForeground(Color.BLUE);
-        contentPane.add(time);
-
+        setResizable(false);
         setContentPane(contentPane);
     }
     private static void fetchDataFromStart() throws IOException {
@@ -134,25 +163,43 @@ public class BusVara extends JFrame {
         var s=  Files.readAllLines(path);
         list_1= (ArrayList<String>) s;
     }
+    private static void fetchDataFromBusList() throws IOException {
+        Path path;
+        buslist=new ArrayList<>();
+        path= Path.of("/home/rupkotha/IdeaProjects/BusPass/src/main/resources/BusName.txt");
+        var s=  Files.readAllLines(path);
+        buslist= (ArrayList<String>) s;
+    }
     public static void main(String[] args) throws IOException {
-        fetchDataFromStart();
-        var find=list
-                          .stream()
-                          .filter(x->x.equals("Savar"))
-                          .findFirst();
-        System.out.println(find.orElse("null"));
-        fetchDataFromDestination();
-        var dest=list_1
-                .stream()
-                .filter(x->x.equals("Mirpur 1"))
-                .findFirst()
-                .orElse("null");
-        System.out.println(dest);
+       new BusVara();
+
+
+
+
+
+//    var find=list
+//            .stream()
+//            .filter(x->x.equals("Savar"))
+//            .findFirst();
+//        System.out.println(find.orElse("null"));
+
+
+
+
+//                fetchDataFromDestination();
+//                var dest=list_1
+//                .stream()
+//                .filter(x->x.equals("Mirpur 1"))
+//                .findFirst()
+//                .orElse("null");
+//                System.out.println(dest);
 
 
 
     }
 }
+
+
 //        List<String> collect = list.stream()
 //                .collect(Collectors
 //                .groupingBy(Function.identity(),Collectors.counting()))

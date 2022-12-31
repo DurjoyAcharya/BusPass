@@ -2,12 +2,20 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
+import java.io.IOException;
 
 public class NextPage extends JFrame {
     public NextPage() throws HeadlessException {
-        setTitle("BusPass-Index");
+        setTitle("User-Need");
         setSize(700,700);
         setIconImage(new ImageIcon("/home/rupkotha/IdeaProjects/BusPass/src/icon.png").getImage());
+
+        var t1=new JLabel("Choose Your Need");
+        t1.setBounds(170,100, 350,30);
+        Font  f3  = new Font(Font.DIALOG,  Font.BOLD, 32);
+        t1.setFont(f3);
+        t1.setForeground(Color.white);
+        getContentPane().add(t1);
         JLabel label = new JLabel();
         label.setHorizontalAlignment(SwingConstants.CENTER);
         var btn=new JButton("Find Routes");
@@ -35,13 +43,17 @@ public class NextPage extends JFrame {
             System.out.println("Button-1");
         });
         btn2.addActionListener((event)->{
-            System.out.println("Button-2");
+            try {
+                new VirtualConsoleController().VirtualConsoleTester();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         btn3.addActionListener((event)->{
             System.out.println("Button-3");
         });
         btn4.addActionListener((event)->{
-            System.out.println("Button-4");
+           new SafetyTips().createWindow();
         });
         btn5.addActionListener((event)->{
             new AboutDev().createWindow();
@@ -71,14 +83,9 @@ public class NextPage extends JFrame {
         btn5.setBackground(new Color(0x2dce98));
         btn5.setForeground(Color.white);
         btn5.setUI(new StyledButtonUI());
-
-
-
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-
 
     }
     public static void main(String[] args) {
@@ -101,7 +108,6 @@ class StyledButtonUI extends BasicButtonUI {
         paintBackground(g, b, b.getModel().isPressed() ? 2 : 0);
         super.paint(g, c);
     }
-
     private void paintBackground (Graphics g, JComponent c, int yOffset) {
         Dimension size = c.getSize();
         Graphics2D g2 = (Graphics2D) g;
